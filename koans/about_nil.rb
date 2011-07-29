@@ -2,7 +2,8 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 
 class AboutNil < EdgeCase::Koan
   def test_nil_is_an_object
-    assert_equal __, nil.is_a?(Object), "Unlike NULL in other languages"
+    # CHEN Learning about "nil" object
+    assert_equal true, nil.is_a?(Object), "Unlike NULL in other languages"
   end
 
   def test_you_dont_get_null_pointer_errors_when_calling_methods_on_nil
@@ -13,18 +14,22 @@ class AboutNil < EdgeCase::Koan
       nil.some_method_nil_doesnt_know_about
     rescue Exception => ex
       # What exception has been caught?
-      assert_equal __, ex.class
+      # CHEN Learning about exceptions: begin/rescue/end
+      # CHEN NoMethodError because of dynamic typing
+      assert_equal NoMethodError, ex.class
 
       # What message was attached to the exception?
       # (HINT: replace __ with part of the error message.)
-      assert_match(/__/, ex.message)
+      assert_match(/undefined/, ex.message)
     end
   end
 
   def test_nil_has_a_few_methods_defined_on_it
-    assert_equal __, nil.nil?
-    assert_equal __, nil.to_s
-    assert_equal __, nil.inspect
+    # CHEN Learning about .nil? and .to_s and .inspect
+    # CHEN Note method calls of no arguments does not need parens!
+    assert_equal true, nil.nil?
+    assert_equal '', nil.to_s
+    assert_equal 'nil', nil.inspect
 
     # THINK ABOUT IT:
     #
@@ -33,6 +38,8 @@ class AboutNil < EdgeCase::Koan
     # or
     #    obj == nil
     # Why?
+
+    # CHEN It seems better to use "== nil" because one would think it faster
   end
 
 end

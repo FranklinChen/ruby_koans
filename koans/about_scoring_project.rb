@@ -31,6 +31,46 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 
 def score(dice)
   # You need to write this method
+  result = 0
+
+  if dice.length > 5
+    raise "length must be <= 5"
+  end
+
+  # Stash counts of each digit 1..6 (encode as 0..5)
+  counts = Array.new(6, 0)
+  dice.each {|roll| counts[roll-1] += 1}
+
+  # Only one digit can possibly have three occurrences.
+  triple_index = counts.find_index {|count| count >= 3}
+  if triple_index
+    roll = triple_index + 1
+    if roll == 1
+      result += 1000
+    else
+      result += 100 * roll
+    end
+  end
+
+  counts1 = counts[1-1]
+  if counts1 > 0
+    if counts1 >= 3
+      result += 100 * (counts1 - 3)
+    else
+      result += 100 * counts1
+    end
+  end
+
+  counts5 = counts[5-1]
+  if counts5 > 0
+    if counts5 >= 3
+      result += 50 * (counts5 - 3)
+    else
+      result += 50 * counts5
+    end
+  end
+
+  result
 end
 
 class AboutScoringProject < EdgeCase::Koan
